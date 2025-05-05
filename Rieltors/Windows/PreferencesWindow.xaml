@@ -1,0 +1,50 @@
+﻿<Window x:Class="Rieltors.Windows.PreferencesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Rieltors.Windows"
+        mc:Ignorable="d"
+        Title="PreferencesWindow" Height="550" Width="800">
+    <Grid>
+        <StackPanel Margin="10">
+            <!-- PropertyType -->
+            <Label Content="Тип Недвижимости:" />
+            <ComboBox x:Name="PropertyTypeComboBox" Margin="0,0,0,10" >
+                <ComboBoxItem Content="Квартира" />
+                <ComboBoxItem Content="Дом" />
+                <ComboBoxItem Content="Студия" />
+            </ComboBox>
+
+            <!-- MinPrice -->
+            <Label Content="Минимальная Цена:" />
+            <TextBox x:Name="MinPriceTextBox" Margin="0,0,0,10" />
+
+            <!-- MaxPrice -->
+            <Label Content="Максимальная Цена:" />
+            <TextBox x:Name="MaxPriceTextBox" Margin="0,0,0,10" />
+
+            <!-- MinArea -->
+            <Label Content="Минимальная Площадь:" />
+            <TextBox x:Name="MinAreaTextBox" Margin="0,0,0,10" />
+
+            <!-- MaxArea -->
+            <Label Content="Максимальная Площадь:" />
+            <TextBox x:Name="MaxAreaTextBox" Margin="0,0,0,10" />
+
+            <!-- Location -->
+            <Label Content="Местоположение:" />
+            <TextBox x:Name="LocationTextBox" Margin="0,0,0,10" />
+
+            <!-- Rooms -->
+            <Label Content="Количество комнат:" />
+            <TextBox x:Name="RoomsTextBox" Margin="0,0,0,10" />
+
+
+            <!-- Save Button -->
+            <Button Content="Сохранить" Click="SaveButton_Click" />
+            
+        </StackPanel>
+        
+    </Grid>
+</Window>

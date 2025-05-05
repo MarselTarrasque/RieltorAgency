@@ -1,0 +1,138 @@
+﻿<Page x:Class="Rieltors.Pages.RegistrationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Rieltors.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1200"
+      Title="RegistrationPage"
+      Style="{StaticResource PageStyle}">
+
+    <Grid Style="{StaticResource PageContainerStyle}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Левая колонка - Вход -->
+        <Border Grid.Column="0" Style="{StaticResource SectionStyle}" Margin="0,0,10,0">
+            <StackPanel Style="{StaticResource InputFormStyle}">
+                <TextBlock Text="Вход" 
+                         Style="{StaticResource PageHeaderStyle}"/>
+                
+                <StackPanel Style="{StaticResource FormGroupStyle}">
+                    <StackPanel Style="{StaticResource FormRowStyle}" HorizontalAlignment="Center">
+                        <StackPanel Width="300" HorizontalAlignment="Center">
+                            <Label Content="Email"/>
+                            <TextBox x:Name="LoginEmailTextBox"
+                                   Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Height="30"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Style="{StaticResource FormRowStyle}" HorizontalAlignment="Center">
+                        <StackPanel Width="300">
+                            <Label Content="Пароль"/>
+                            <TextBox x:Name="LoginPasswordBox"
+                                      Validation.ErrorTemplate="{StaticResource ValidationTemplate}" 
+                                      Height="31"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Style="{StaticResource ButtonPanelStyle}">
+                        <Button x:Name="LoginButton"
+                                Content="Войти"
+                                Style="{StaticResource ActionButtonStyle}"
+                                Click="LoginButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Правая колонка - Регистрация -->
+        <Border Grid.Column="1" Style="{StaticResource SectionStyle}" Margin="0,0,24,0">
+            <StackPanel Style="{StaticResource InputFormStyle}">
+                <TextBlock Text="Регистрация" 
+                         Style="{StaticResource PageHeaderStyle}"/>
+
+                <!-- Личная информация -->
+                <StackPanel Style="{StaticResource FormGroupStyle}">
+                    <TextBlock Text="Личная информация" 
+                             Style="{StaticResource SectionHeaderStyle}"/>
+                    
+                    <StackPanel Style="{StaticResource FormRowStyle}">
+                        <StackPanel Width="300">
+                            <Label Content="Имя"/>
+                            <TextBox x:Name="RegisterFirstNameTextBox" Height="28"/>
+                        </StackPanel>
+                        
+                        <StackPanel Width="230">
+                            <Label Content="Фамилия"/>
+                            <TextBox x:Name="RegisterLastNameTextBox" Height="28"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Style="{StaticResource FormRowStyle}">
+                        <StackPanel Width="300">
+                            <Label Content="Дата рождения"/>
+                            <DatePicker x:Name="BirthDatePicker" Height="27"/>
+                        </StackPanel>
+                        
+                        <StackPanel Width="230">
+                            <Label Content="Телефон"/>
+                            <TextBox x:Name="RegisterPhoneTextBox" Height="27"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Учетные данные -->
+                <StackPanel Style="{StaticResource FormGroupStyle}">
+                    <TextBlock Text="Учетные данные" 
+                             Style="{StaticResource SectionHeaderStyle}"/>
+                    
+                    <StackPanel Style="{StaticResource FormRowStyle}">
+                        <StackPanel Width="300">
+                            <Label Content="Email"/>
+                            <TextBox x:Name="RegisterEmailTextBox" Height="27"/>
+                        </StackPanel>
+                        
+                        <StackPanel Width="230">
+                            <Label Content="Тип пользователя"/>
+                            <ComboBox x:Name="RegisterRoleComboBox" Height="29">
+                                <ComboBoxItem Content="Клиент"/>
+                                <ComboBoxItem Content="Риэлтор"/>
+                                <ComboBoxItem Content="Администратор"/>
+                            </ComboBox>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Style="{StaticResource FormRowStyle}">
+                        <StackPanel Width="300">
+                            <Label Content="Пароль"/>
+                            <TextBox x:Name="RegisterPasswordBox" Height="28"/>
+                        </StackPanel>
+                        
+                        <StackPanel Width="230">
+                            <Label Content="Подтверждение пароля"/>
+                            <TextBox x:Name="RegisterConfirmPasswordBox" Height="29"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Кнопки действий -->
+                <StackPanel Style="{StaticResource ButtonPanelStyle}">
+                    <Button x:Name="RegisterButton"
+                            Content="Зарегистрироваться"
+                            Style="{StaticResource ActionButtonStyle}"
+                            Click="RegisterButton_Click"/>
+                    
+                    <Button x:Name="CancelButton"
+                            Content="Отмена"
+                            Style="{StaticResource CancelButtonStyle}"
+                            Click="CancelButton_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>
+

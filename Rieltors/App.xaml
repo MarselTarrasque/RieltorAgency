@@ -1,0 +1,344 @@
+﻿<Application x:Class="Rieltors.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Rieltors"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!-- Цвета -->
+            <SolidColorBrush x:Key="Red" Color="#ff0000"/>
+            <SolidColorBrush x:Key="PrimaryColor" Color="#FFFF8C00"/>
+            <SolidColorBrush x:Key="SecondaryColor" Color="#FF03A9F4"/>
+            <SolidColorBrush x:Key="BackgroundColor" Color="#FFF"/>
+            <SolidColorBrush x:Key="TextColor" Color="#FF000000"/>
+
+            <!-- Базовый стиль для кнопок -->
+            <Style x:Key="BaseButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Padding" Value="15,5"/>
+                <Setter Property="Margin" Value="3"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="3"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{StaticResource SecondaryColor}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!-- Стиль для страниц -->
+            <Style x:Key="PageStyle" TargetType="Page">
+                <Setter Property="Background" Value="{StaticResource BackgroundColor}"/>
+                <Setter Property="Margin" Value="10"/>
+            </Style>
+
+            <!-- Стиль для контейнера страницы -->
+            <Style x:Key="PageContainerStyle" TargetType="Grid">
+                <Setter Property="Background" Value="{StaticResource BackgroundColor}"/>
+                <Setter Property="Margin" Value="10"/>
+            </Style>
+
+            <!-- Стиль для заголовка страницы -->
+            <Style x:Key="PageHeaderStyle" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource PrimaryColor}"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Margin" Value="0,5,0,5"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+            </Style>
+
+            <!-- Стиль для заголовка секции -->
+            <Style x:Key="SectionHeaderStyle" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource PrimaryColor}"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Margin" Value="0,0,0,5"/>
+            </Style>
+
+            <!-- Стиль для секции страницы -->
+            <Style x:Key="SectionStyle" TargetType="Border">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="BorderBrush" Value="{StaticResource SecondaryColor}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius" Value="3"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Margin" Value="0,0,0,10"/>
+            </Style>
+
+            <!-- Стиль для кнопок действий -->
+            <Style x:Key="ActionButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
+                <Setter Property="MinWidth" Value="100"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+            </Style>
+
+            <!-- Стиль для кнопок отмены -->
+            <Style x:Key="CancelButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
+                <Setter Property="Background" Value="#FFE0E0E0"/>
+                <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+            </Style>
+
+            <!-- Стиль для панели кнопок -->
+            <Style x:Key="ButtonPanelStyle" TargetType="StackPanel">
+                <Setter Property="Orientation" Value="Horizontal"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="0,10,0,0"/>
+            </Style>
+
+            <!-- Стили для текстовых полей -->
+            <Style TargetType="TextBox">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource SecondaryColor}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Padding" Value="3"/>
+                <Setter Property="Margin" Value="3"/>
+                <Setter Property="Height" Value="25"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="3">
+                                <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Стили для меток -->
+            <Style TargetType="Label">
+                <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Margin" Value="3"/>
+            </Style>
+
+            <!-- Шаблоны для ComboBox -->
+            <ControlTemplate x:Key="ComboBoxToggleButtonTemplate" TargetType="ToggleButton">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="15"/>
+                    </Grid.ColumnDefinitions>
+                    <Border x:Name="Border" 
+                            Grid.ColumnSpan="2"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3"/>
+                    <Path x:Name="Arrow"
+                          Grid.Column="1"
+                          Fill="{TemplateBinding Foreground}"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Data="M 0 0 L 3 3 L 6 0 Z"/>
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                        <Setter TargetName="Border" Property="Background" Value="{StaticResource SecondaryColor}"/>
+                    </Trigger>
+                    <Trigger Property="ToggleButton.IsChecked" Value="true">
+                        <Setter TargetName="Arrow" Property="Data" Value="M 0 3 L 3 0 L 6 3 Z"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="ComboBoxTextBoxTemplate" TargetType="TextBox">
+                <Border x:Name="Border" 
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="3">
+                    <ScrollViewer x:Name="PART_ContentHost"
+                                Margin="{TemplateBinding Padding}"
+                                VerticalAlignment="Center"/>
+                </Border>
+            </ControlTemplate>
+
+            <!-- Стили для ComboBox -->
+            <Style TargetType="ComboBox">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource SecondaryColor}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Padding" Value="3"/>
+                <Setter Property="Margin" Value="3"/>
+                <Setter Property="Height" Value="25"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ComboBox">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="3">
+                                <Grid>
+                                    <ToggleButton x:Name="ToggleButton"
+                                                Template="{StaticResource ComboBoxToggleButtonTemplate}"
+                                                Grid.Column="0"
+                                                Grid.ColumnSpan="2"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                    <ContentPresenter x:Name="ContentSite"
+                                                    Content="{TemplateBinding SelectionBoxItem}"
+                                                    ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                    ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                    Margin="{TemplateBinding Padding}"
+                                                    IsHitTestVisible="False"
+                                                    VerticalAlignment="Center"/>
+                                    <TextBox x:Name="PART_EditableTextBox"
+                                            Style="{x:Null}"
+                                            Template="{StaticResource ComboBoxTextBoxTemplate}"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Margin="{TemplateBinding Padding}"
+                                            Focusable="True"
+                                            Background="Transparent"
+                                            Visibility="Hidden"
+                                            IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                                    <Popup x:Name="Popup"
+                                        Placement="Bottom"
+                                        IsOpen="{TemplateBinding IsDropDownOpen}"
+                                        AllowsTransparency="True"
+                                        Focusable="False"
+                                        PopupAnimation="Slide">
+                                        <Grid x:Name="DropDown"
+                                            SnapsToDevicePixels="True"
+                                            MinWidth="{TemplateBinding ActualWidth}"
+                                            MaxHeight="200">
+                                            <Border x:Name="DropDownBorder"
+                                                    Background="{TemplateBinding Background}"
+                                                    BorderBrush="{StaticResource SecondaryColor}"
+                                                    BorderThickness="1"
+                                                    CornerRadius="3"/>
+                                            <ScrollViewer SnapsToDevicePixels="True">
+                                                <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                            </ScrollViewer>
+                                        </Grid>
+                                    </Popup>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Стили для DatePicker -->
+            <Style TargetType="DatePicker">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource SecondaryColor}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Padding" Value="3"/>
+                <Setter Property="Margin" Value="3"/>
+                <Setter Property="Height" Value="25"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DatePicker">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="3">
+                                <Grid>
+                                    <DatePickerTextBox x:Name="PART_TextBox"
+                                                    Foreground="{TemplateBinding Foreground}"
+                                                    Background="{TemplateBinding Background}"
+                                                    BorderThickness="0"
+                                                    Padding="{TemplateBinding Padding}"/>
+                                    <Button x:Name="PART_Button"
+                                            Content="📅"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            Margin="0,0,3,0"/>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Стиль для формы ввода -->
+            <Style x:Key="InputFormStyle" TargetType="StackPanel">
+                <Setter Property="Margin" Value="0,5"/>
+            </Style>
+
+            <!-- Стиль для строки формы -->
+            <Style x:Key="FormRowStyle" TargetType="StackPanel">
+                <Setter Property="Orientation" Value="Horizontal"/>
+                <Setter Property="Margin" Value="0,5"/>
+            </Style>
+
+            <!-- Стиль для группы элементов формы -->
+            <Style x:Key="FormGroupStyle" TargetType="StackPanel">
+                <Setter Property="Margin" Value="0,10"/>
+            </Style>
+
+            <!-- Стили для DataGrid -->
+            <Style TargetType="DataGrid">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="BorderBrush" Value="{StaticResource SecondaryColor}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="RowBackground" Value="White"/>
+                <Setter Property="AlternatingRowBackground" Value="#F5F5F5"/>
+                <Setter Property="HorizontalGridLinesBrush" Value="#E0E0E0"/>
+                <Setter Property="VerticalGridLinesBrush" Value="#E0E0E0"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
+                <Setter Property="CanUserAddRows" Value="False"/>
+                <Setter Property="CanUserDeleteRows" Value="False"/>
+                <Setter Property="CanUserReorderColumns" Value="True"/>
+                <Setter Property="CanUserResizeColumns" Value="True"/>
+                <Setter Property="CanUserResizeRows" Value="False"/>
+                <Setter Property="CanUserSortColumns" Value="True"/>
+                <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+                <Setter Property="RowHeight" Value="25"/>
+                <Setter Property="ColumnHeaderHeight" Value="30"/>
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+
+            <!-- Шаблон для валидации -->
+            <ControlTemplate x:Key="ValidationTemplate">
+                <DockPanel>
+                    <TextBlock Foreground="Red" FontSize="12" FontWeight="Bold" Text=" ! "/>
+                    <AdornedElementPlaceholder x:Name="adornerPlaceholder" ToolTip="{Binding ElementName=adornerPlaceholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" />
+                </DockPanel>
+            </ControlTemplate>
+
+            <Style x:Key="LabelStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+                <Setter Property="Margin" Value="0,5,10,5"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <Style x:Key="ValueStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+                <Setter Property="Margin" Value="0,5,0,5"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
+

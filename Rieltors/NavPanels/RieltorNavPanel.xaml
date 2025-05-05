@@ -1,0 +1,37 @@
+﻿<Page x:Class="Rieltors.NavPanels.RieltorNavPanel"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Rieltors.NavPanels"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="200"
+      Title="RieltorNavPanel"
+      Background="{StaticResource BackgroundColor}">
+
+    <StackPanel Style="{StaticResource ButtonPanelStyle}" Orientation="Vertical" Margin="0,20,0,0">
+        <Button x:Name="Profile"
+                Content="Профиль"
+                Style="{StaticResource ActionButtonStyle}"
+                Click="ProfileButton_Click" Width="190"/>
+
+        <Button x:Name="Properties"
+                Content="Недвижимость"
+                Style="{StaticResource ActionButtonStyle}"
+                Click="PropertiesButton_Click" Width="189"/>
+
+        <Button x:Name="CreateProperty"
+                Content="Создать Недвижимость"
+                Style="{StaticResource ActionButtonStyle}"
+                Click="CreatePropertyButton_Click" Width="192"/>
+        <Button x:Name="AllClients"
+            Content="Все клиенты"
+            Style="{StaticResource ActionButtonStyle}"
+            Click="AllClientsButton_Click" Width="192"/>
+
+        <Button x:Name="LogoutButton"
+                Content="Выйти"
+                Style="{StaticResource CancelButtonStyle}"
+                Click="LogoutButton_Click"/>
+    </StackPanel>
+</Page>

@@ -1,0 +1,105 @@
+<Page x:Class="Rieltors.Pages.CreatePropertyPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Rieltors.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1200"
+      Title="CreatePropertyPage"
+      Style="{StaticResource PageStyle}">
+
+    <Grid Style="{StaticResource PageContainerStyle}">
+        <StackPanel>
+            <TextBlock Text="Создание новой недвижимости" 
+                     Style="{StaticResource PageHeaderStyle}"/>
+
+            <Border Style="{StaticResource SectionStyle}">
+                <StackPanel Style="{StaticResource InputFormStyle}">
+                    <!-- Основная информация -->
+                    <StackPanel Style="{StaticResource FormGroupStyle}">
+                        <TextBlock Text="Основная информация" 
+                                 Style="{StaticResource SectionHeaderStyle}"/>
+                        
+                        <StackPanel Style="{StaticResource FormRowStyle}">
+                            <StackPanel Width="300">
+                                <Label Content="Тип недвижимости"/>
+                                <ComboBox x:Name="PropertyTypeComboBox"/>
+                            </StackPanel>
+                            
+                            <StackPanel Width="300">
+                                <Label Content="Адрес"/>
+                                <TextBox x:Name="AddressTextBox"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Style="{StaticResource FormRowStyle}">
+                            <StackPanel Width="300">
+                                <Label Content="Площадь (кв.м)"/>
+                                <TextBox x:Name="AreaTextBox"/>
+                            </StackPanel>
+                            
+                            <StackPanel Width="300">
+                                <Label Content="Цена"/>
+                                <TextBox x:Name="PriceTextBox"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Дополнительная информация -->
+                    <StackPanel Style="{StaticResource FormGroupStyle}">
+                        <TextBlock Text="Дополнительная информация" 
+                                 Style="{StaticResource SectionHeaderStyle}"/>
+                        
+                        <StackPanel Style="{StaticResource FormRowStyle}">
+                            <StackPanel Width="300">
+                                <Label Content="Количество комнат"/>
+                                <ComboBox x:Name="RoomsComboBox"/>
+                            </StackPanel>
+                            
+                            <StackPanel Width="300">
+                                <Label Content="Этаж"/>
+                                <TextBox x:Name="FloorTextBox"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Style="{StaticResource FormRowStyle}">
+                            <StackPanel Width="300">
+                                <Label Content="Дата постройки"/>
+                                <DatePicker x:Name="ConstructionDatePicker"/>
+                            </StackPanel>
+                            
+                            <StackPanel Width="300">
+                                <Label Content="Состояние"/>
+                                <ComboBox x:Name="ConditionComboBox"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Описание -->
+                    <StackPanel Style="{StaticResource FormGroupStyle}">
+                        <TextBlock Text="Описание" 
+                                 Style="{StaticResource SectionHeaderStyle}"/>
+                        <TextBox x:Name="DescriptionTextBox" 
+                               Height="100" 
+                               TextWrapping="Wrap"
+                               AcceptsReturn="True"/>
+                    </StackPanel>
+
+                    <!-- Кнопки действий -->
+                    <StackPanel Style="{StaticResource ButtonPanelStyle}">
+                        <Button x:Name="SaveButton"
+                                Content="Сохранить"
+                                Style="{StaticResource ActionButtonStyle}"
+                                Click="SaveButton_Click"/>
+                        
+                        <Button x:Name="CancelButton"
+                                Content="Отмена"
+                                Style="{StaticResource CancelButtonStyle}"
+                                Click="CancelButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
+</Page> 
