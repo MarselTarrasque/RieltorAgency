@@ -28,6 +28,10 @@
             Content="Все клиенты"
             Style="{StaticResource ActionButtonStyle}"
             Click="AllClientsButton_Click" Width="192"/>
+        <Button x:Name="MyDeals"
+            Content="Мои сделки"
+            Style="{StaticResource ActionButtonStyle}"
+            Click="MyDeals_Click" Width="192"/>
 
         <Button x:Name="LogoutButton"
                 Content="Выйти"

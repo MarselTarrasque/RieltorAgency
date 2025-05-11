@@ -109,6 +109,9 @@
     <Compile Include="Pages\RieltorPages\AllClients.xaml.cs">
       <DependentUpon>AllClients.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\RieltorPages\RIeltorDealsPage.xaml.cs">
+      <DependentUpon>RIeltorDealsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\RieltorPages\RieltorEditPropertyPage.xaml.cs">
       <DependentUpon>RieltorEditPropertyPage.xaml</DependentUpon>
     </Compile>
@@ -133,10 +136,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NavPanels\RieltorNavPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="NavPanels\UnreggedPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -172,6 +171,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\RieltorPages\RIeltorDealsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\RieltorPages\RieltorEditPropertyPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -187,9 +190,6 @@
     </Compile>
     <Compile Include="NavPanels\RieltorNavPanel.xaml.cs">
       <DependentUpon>RieltorNavPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="NavPanels\UnreggedPanel.xaml.cs">
-      <DependentUpon>UnreggedPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ClientPages\UserDeals.xaml.cs">
       <DependentUpon>UserDeals.xaml</DependentUpon>
@@ -247,7 +247,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Classes\" />
-    <Folder Include="PropertiesImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ADO\Model1.Context.tt">
@@ -260,6 +259,10 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Resource Include="Images\PropertiesImages\52d53dbf-155f-4a13-b519-86ed85eaa721.jpg" />
+    <Resource Include="Images\PropertiesImages\724c4b22-51c4-416d-913d-725aadf4e0fb.JPG" />
+    <Resource Include="Images\PropertiesImages\a7aa3cb9-4863-4982-b2ae-58edbd579d81.JPG" />
+    <Resource Include="Images\PropertiesImages\6c1ccc6c-97b8-455c-bcb3-71a64ba52a0b.JPG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

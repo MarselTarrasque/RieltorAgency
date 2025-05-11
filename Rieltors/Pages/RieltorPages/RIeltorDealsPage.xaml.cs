@@ -1,6 +1,4 @@
-﻿
-using Rieltors.Pages;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,23 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Rieltors.NavPanels
+namespace Rieltors.Pages.RieltorPages
 {
     /// <summary>
-    /// Логика взаимодействия для UnreggedPanel.xaml
+    /// Логика взаимодействия для RIeltorDealsPage.xaml
     /// </summary>
-    public partial class UnreggedPanel : Page
+    public partial class RIeltorDealsPage : Page
     {
-        private MainWindow _mw;
-        public UnreggedPanel(MainWindow mw)
+        public RIeltorDealsPage()
         {
             InitializeComponent();
-            _mw = mw;   
-        }
-
-        private void RegisterLoginButton_Click(object sender, RoutedEventArgs e)
-        {
-            _mw.MainFrame.NavigationService.Navigate(new RegistrationPage(_mw));
         }
     }
 }

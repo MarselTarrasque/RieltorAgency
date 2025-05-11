@@ -175,7 +175,7 @@ namespace Rieltors.Pages
                 ConnectionDb.db.Properties.Remove(PROP);
                 // Сохраняем изменения
                 ConnectionDb.db.SaveChanges();
-                _mw.MainFrame.NavigationService.GoBack();
+                _mw.MainFrame.NavigationService.Navigate(new PropertiesPage(_mw, _userId));
             }
         }
     }

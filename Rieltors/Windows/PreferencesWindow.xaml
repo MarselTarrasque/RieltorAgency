@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Rieltors.Windows"
         mc:Ignorable="d"
-        Title="PreferencesWindow" Height="550" Width="800">
+        Title="PreferencesWindow" Height="550" Width="800"
+        ResizeMode="NoResize">
     <Grid>
         <StackPanel Margin="10">
             <!-- PropertyType -->
@@ -37,12 +38,10 @@
             <TextBox x:Name="LocationTextBox" Margin="0,0,0,10" />
 
             <!-- Rooms -->
-            <Label Content="Количество комнат:" />
-            <TextBox x:Name="RoomsTextBox" Margin="0,0,0,10" />
 
 
             <!-- Save Button -->
-            <Button Content="Сохранить" Click="SaveButton_Click" />
+            <Button Content="Сохранить" Click="SaveButton_Click"  Style="{StaticResource ActionButtonStyle}" Width="188"/>
             
         </StackPanel>
         

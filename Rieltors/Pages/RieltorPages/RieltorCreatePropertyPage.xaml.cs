@@ -1,33 +1,20 @@
 ﻿using Microsoft.Win32;
 using Rieltors.ADO;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Rieltors.Pages.RieltorPages
 {
-    /// <summary>
-    /// Логика взаимодействия для RieltorCreatePropertyPage.xaml
-    /// </summary>
     public partial class RieltorCreatePropertyPage : Page
     {
         private MainWindow _mw;
         private int _userId;
         public ObservableCollection<ImageItem> ImageList { get; set; } = new ObservableCollection<ImageItem>();
-        private string _propertyImagesDirectory; // Папка для хранения изображений
+        private string _propertyImagesDirectory = @"C:\Users\Марсель\source\repos\MarselTarrasque\RieltorAgency\Rieltors\Images\PropertiesImages\"; // Full path
 
         public RieltorCreatePropertyPage(MainWindow mw, int userId)
         {
@@ -36,42 +23,76 @@ namespace Rieltors.Pages.RieltorPages
             _userId = userId;
             DataContext = this;
 
-            // Определяем путь к папке PropertyImages.  Важно использовать AppDomain.CurrentDomain.BaseDirectory для получения базового пути приложения.
-            _propertyImagesDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "PropertiesImages");
-
-            // Создаем папку, если ее не существует
+            // Ensure directory exists
             if (!Directory.Exists(_propertyImagesDirectory))
             {
                 Directory.CreateDirectory(_propertyImagesDirectory);
             }
+
+            // Check permissions
+            CheckDirectoryAccess();
         }
+
+        private void CheckDirectoryAccess()
+        {
+            try
+            {
+                string testFilePath = Path.Combine(_propertyImagesDirectory, "test.txt");
+                File.WriteAllText(testFilePath, "Проверка прав доступа");
+                File.Delete(testFilePath);
+                Console.WriteLine("Права доступа есть!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Нет прав доступа: {ex.Message}");
+                MessageBox.Show($"Нет прав доступа для записи в папку {_propertyImagesDirectory}. Обратитесь к администратору.");
+            }
+        }
+
         private void AddImageButton_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.png)|*.jpg;*.jpeg;*.png";
+
             if (openFileDialog.ShowDialog() == true)
             {
                 string filePath = openFileDialog.FileName;
 
-                // Генерируем уникальное имя файла для сохранения в папке проекта
-                string fileName = Guid.NewGuid().ToString() + System.IO.Path.GetExtension(filePath);
-                string destinationPath = System.IO.Path.Combine(_propertyImagesDirectory, fileName);
+                MessageBox.Show($"Selected File Path: {filePath}");
 
-                // Копируем файл в папку PropertyImages
+                if (!File.Exists(filePath))
+                {
+                    MessageBox.Show($"ERROR: File does not exist: {filePath}");
+                    return;
+                }
+
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(filePath);
+                string destinationPath = Path.Combine(_propertyImagesDirectory, fileName); // Full path
+
+                MessageBox.Show($"Destination Directory: {_propertyImagesDirectory}");
+                MessageBox.Show($"Destination File Path: {destinationPath}");
+
                 try
                 {
                     File.Copy(filePath, destinationPath);
+                    MessageBox.Show("File copied successfully!");
+
                     BitmapImage bitmap = new BitmapImage();
                     bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(destinationPath, UriKind.Relative); //Указываем относительный Uri
+                    bitmap.UriSource = new Uri(destinationPath); // Full path
                     bitmap.CacheOption = BitmapCacheOption.OnLoad;
                     bitmap.EndInit();
 
-                    ImageList.Add(new ImageItem { ImageSource = bitmap, ImagePath = fileName, Description = "Описание изображения" }); // Сохраняем только имя файла
+                    ImageList.Add(new ImageItem
+                    {
+                        ImageSource = bitmap,
+                        ImagePath = fileName, // Store just the filename
+                        Description = "Описание изображения"
+                    });
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка при копировании файла: {ex.Message}");
+                    MessageBox.Show($"ERROR copying file: {ex.Message}\nStack Trace: {ex.StackTrace}");
                 }
             }
         }
@@ -80,7 +101,7 @@ namespace Rieltors.Pages.RieltorPages
         {
             try
             {
-                // Проверки на заполненность полей (добавьте необходимые проверки)
+                // Basic field validation
                 if (string.IsNullOrEmpty(PropertyTypeComboBox.Text) ||
                     string.IsNullOrEmpty(AddressTextBox.Text) ||
                     string.IsNullOrEmpty(CityTextBox.Text) ||
@@ -92,16 +113,17 @@ namespace Rieltors.Pages.RieltorPages
                     string.IsNullOrEmpty(PropertyStatusComboBox.Text) ||
                     string.IsNullOrEmpty(DealTypeComboBox.Text))
                 {
-                    MessageBox.Show("Пожалуйста, заполните все обязательные поля.");
+                    MessageBox.Show("Пожалуйста, заполните все поля.");
                     return;
                 }
 
                 if (!decimal.TryParse(PriceTextBox.Text, out decimal price) || !decimal.TryParse(AreaTextBox.Text, out decimal area))
                 {
-                    MessageBox.Show("Некорректный формат цены или площади.  Используйте числовой формат.");
+                    MessageBox.Show("Некорректный формат цены или площади. Используйте числовой формат.");
                     return;
                 }
-                // 1. Создание объекта недвижимости
+
+                // Create new property object
                 var newProperty = new ADO.Properties
                 {
                     PropertyType = PropertyTypeComboBox.Text,
@@ -114,25 +136,25 @@ namespace Rieltors.Pages.RieltorPages
                     Description = DescriptionTextBox.Text,
                     PropertyStatus = PropertyStatusComboBox.Text,
                     AddedDate = DateTime.Now,
-                    RealtorID = _userId, // Заглушка, потом изменить
+                    RealtorID = _userId,
                     RealEstateTransactions = DealTypeComboBox.Text
                 };
 
                 ConnectionDb.db.Properties.Add(newProperty);
 
-                // 2. Сохранение информации об изображениях
+                // Save image info
                 foreach (var imageItem in ImageList)
                 {
-                    // Создаем запись в таблице PropertyImages
                     var newPropertyImage = new PropertyImages
                     {
                         PropertyID = newProperty.PropertyID,
-                        ImageURL = imageItem.ImagePath, // Сохраняем ТОЛЬКО имя файла (относительный путь)
+                        ImageURL = imageItem.ImagePath, // Store only filename
                         Description = imageItem.Description
                     };
                     ConnectionDb.db.PropertyImages.Add(newPropertyImage);
                 }
-                await ConnectionDb.db.SaveChangesAsync(); // Сохраняем изображения
+
+                await ConnectionDb.db.SaveChangesAsync();
 
                 MessageBox.Show("Недвижимость успешно добавлена!");
                 _mw.MainFrame.NavigationService.Navigate(new PropertiesPage(_mw, _userId));
@@ -147,7 +169,7 @@ namespace Rieltors.Pages.RieltorPages
     public class ImageItem
     {
         public BitmapImage ImageSource { get; set; }
-        public string ImagePath { get; set; } // Сохраняем только имя файла (относительный путь).  Важно для переносимости!
+        public string ImagePath { get; set; } // Store only filename for DB
         public string Description { get; set; }
     }
 }

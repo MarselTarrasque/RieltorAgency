@@ -3,26 +3,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Globalization;
 using Microsoft.Win32;
 using Rieltors.ADO;
 
 namespace Rieltors.Pages.RieltorPages
 {
-    /// <summary>
-    /// Логика взаимодействия для RieltorEditPropertyPage.xaml
-    /// </summary>
     public partial class RieltorEditPropertyPage : Page
     {
         private MainWindow _mw;
@@ -37,18 +25,20 @@ namespace Rieltors.Pages.RieltorPages
             InitializeComponent();
             _mw = mw;
             _propertyId = propertyId;
+            _userId = userId;
             DataContext = this;
 
             // Путь к папке PropertiesImages (относительный путь!)
-            _propertyImagesDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "PropertiesImages");
-            LoadPropertyData();
+            _propertyImagesDirectory = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "PropertiesImages");
+
             // Создаем папку, если ее не существует
             if (!Directory.Exists(_propertyImagesDirectory))
             {
                 Directory.CreateDirectory(_propertyImagesDirectory);
             }
-        }
 
+            LoadPropertyData();
+        }
 
         private void LoadPropertyData()
         {
@@ -67,7 +57,6 @@ namespace Rieltors.Pages.RieltorPages
                 DescriptionTextBox.Text = _property.Description;
                 PropertyStatusComboBox.Text = _property.PropertyStatus;
                 DealTypeComboBox.Text = _property.RealEstateTransactions;
-               
 
                 // Заполняем ComboBox'ы
                 SetComboBoxSelectedItem(PropertyTypeComboBox, _property.PropertyType);
@@ -106,22 +95,24 @@ namespace Rieltors.Pages.RieltorPages
 
                 foreach (var propertyImage in propertyImages)
                 {
-                    //  ImageURL хранит только имя файла!
+                    // ImageURL хранит только имя файла!
                     string fileName = propertyImage.ImageURL;
 
-                    //  Собираем полный путь к файлу
+                    // Собираем полный путь к файлу
                     string imagePath = System.IO.Path.Combine(_propertyImagesDirectory, fileName);
 
-
+                    // Проверяем, существует ли файл
                     if (File.Exists(imagePath))
                     {
+                        // Создаем BitmapImage
                         BitmapImage bitmap = new BitmapImage();
                         bitmap.BeginInit();
-                        bitmap.UriSource = new Uri(Convert.ToString(new Uri(imagePath, UriKind.Absolute))); //  Укажите UriKind.Absolute
+                        bitmap.UriSource = new Uri(imagePath); // Use the full image path
                         bitmap.CacheOption = BitmapCacheOption.OnLoad;
                         bitmap.EndInit();
 
-                        ImageList.Add(new ImageItem { ImageSource = bitmap, ImagePath = imagePath, Description = propertyImage.Description });
+                        // Добавляем ImageItem в ImageList
+                        ImageList.Add(new ImageItem { ImageSource = bitmap, ImagePath = fileName, Description = propertyImage.Description });
                     }
                     else
                     {
@@ -152,15 +143,51 @@ namespace Rieltors.Pages.RieltorPages
                     File.Copy(filePath, destinationPath);
                     BitmapImage bitmap = new BitmapImage();
                     bitmap.BeginInit();
-                    bitmap.UriSource = new Uri(Convert.ToString(new Uri(destinationPath, UriKind.Absolute))); //  Укажите UriKind.Absolute
+                    bitmap.UriSource = new Uri(destinationPath); // Use the full image path
                     bitmap.CacheOption = BitmapCacheOption.OnLoad;
                     bitmap.EndInit();
-                    ImageList.Add(new ImageItem { ImageSource = bitmap, ImagePath = destinationPath, Description = "Описание изображения" });
+                    ImageList.Add(new ImageItem { ImageSource = bitmap, ImagePath = fileName, Description = "Описание изображения" });
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Ошибка при копировании файла: {ex.Message}");
                 }
+            }
+        }
+
+        private void DeleteImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Получаем выбранный элемент из ListView
+            var selectedImage = ImagesListView.SelectedItem as ImageItem;
+
+            if (selectedImage != null)
+            {
+                try
+                {
+                    // 1. Удаление файла с диска
+                    string fullPath = System.IO.Path.Combine(_propertyImagesDirectory, selectedImage.ImagePath); // Correct path creation
+
+                    if (File.Exists(fullPath))
+                    {
+                        File.Delete(fullPath);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Файл не найден: {fullPath}");
+                    }
+
+                    // 2. Удаление из ImageList (отображение)
+                    ImageList.Remove(selectedImage);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при удалении файла: {ex.Message}");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите изображение для удаления.");
             }
         }
 
@@ -171,28 +198,28 @@ namespace Rieltors.Pages.RieltorPages
                 // 1. Обновление объекта недвижимости
                 _property.PropertyType = PropertyTypeComboBox.Text;
                 _property.Address = AddressTextBox.Text;
-                _property.City = CityTextBox.Text;
-                _property.Region = RegionTextBox.Text;
-                _property.PostalCode = PostalCodeTextBox.Text;
+                _property.City = _property.City;
+                _property.Region = _property.Region;
+                _property.PostalCode = _property.PostalCode;
                 _property.Price = decimal.Parse(PriceTextBox.Text);
                 _property.Area = decimal.Parse(AreaTextBox.Text);
-                _property.Description = DescriptionTextBox.Text;
+                _property.Description = _property.Description;
                 _property.PropertyStatus = PropertyStatusComboBox.Text;
                 _property.RealEstateTransactions = DealTypeComboBox.Text;
 
                 ConnectionDb.db.SaveChanges();
 
                 // 2. Обновление изображений
-                // Сначала удаляем старые изображения
+                // Сначала удаляем старые изображения из базы данных
                 var oldImages = ConnectionDb.db.PropertyImages.Where(pi => pi.PropertyID == _propertyId).ToList();
                 ConnectionDb.db.PropertyImages.RemoveRange(oldImages);
                 ConnectionDb.db.SaveChanges();
 
-                // Затем добавим новые изображения
+                // Затем добавляем новые изображения из ImageList
                 foreach (var imageItem in ImageList)
                 {
-                    //Получаем имя файла
-                    string fileName = System.IO.Path.GetFileName(imageItem.ImagePath);
+                    string fileName = imageItem.ImagePath;  // we store filename in ImagePath
+
                     var newPropertyImage = new ADO.PropertyImages
                     {
                         PropertyID = _propertyId,
