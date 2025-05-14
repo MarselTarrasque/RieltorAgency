@@ -56,6 +56,8 @@
             <ComboBoxItem Content="Дом"/>
             <ComboBoxItem Content="Студия"/>
             <ComboBoxItem Content="Комната"/>
+            <ComboBoxItem Content="Офис" />
+            <ComboBoxItem Content="Участок" />
         </ComboBox>
 
         <!-- Address -->
@@ -64,7 +66,7 @@
                    Content="Адрес:"/>
         <TextBox Grid.Row="2" 
                      Grid.Column="1" 
-                     x:Name="AddressTextBox"/>
+                     x:Name="AddressTextBox" Height="30"/>
 
         <!-- City -->
         <Label Grid.Row="3" 
@@ -72,7 +74,7 @@
                    Content="Город:"/>
         <TextBox Grid.Row="3" 
                      Grid.Column="1" 
-                     x:Name="CityTextBox"/>
+                     x:Name="CityTextBox" Height="30"/>
 
         <!-- Region -->
         <Label Grid.Row="4" 
@@ -80,7 +82,7 @@
                    Content="Регион:"/>
         <TextBox Grid.Row="4" 
                      Grid.Column="1" 
-                     x:Name="RegionTextBox"/>
+                     x:Name="RegionTextBox" Height="30"/>
 
         <!-- PostalCode -->
         <Label Grid.Row="5" 
@@ -88,7 +90,7 @@
                    Content="Почтовый код:"/>
         <TextBox Grid.Row="5" 
                      Grid.Column="1" 
-                     x:Name="PostalCodeTextBox"/>
+                     x:Name="PostalCodeTextBox" Height="30"/>
 
         <!-- Price -->
         <Label Grid.Row="6" 
@@ -96,7 +98,7 @@
                    Content="Цена:"/>
         <TextBox Grid.Row="6" 
                      Grid.Column="1" 
-                     x:Name="PriceTextBox"/>
+                     x:Name="PriceTextBox" Height="30"/>
 
         <!-- Area -->
         <Label Grid.Row="7" 
@@ -104,7 +106,7 @@
                    Content="Площадь:"/>
         <TextBox Grid.Row="7" 
                      Grid.Column="1" 
-                     x:Name="AreaTextBox"/>
+                     x:Name="AreaTextBox" Height="30"/>
 
         <!-- Description -->
         <Label Grid.Row="8" 
@@ -130,9 +132,9 @@
                       Width="250" 
                       Grid.Column="1" 
                       Grid.Row="12" Margin="3,4,603,3">
-            <ComboBoxItem Content="Активно"/>
+            <ComboBoxItem Content="Доступно"/>
             <ComboBoxItem Content="Продано"/>
-            <ComboBoxItem Content="В аренде"/>
+            <ComboBoxItem Content="Арендовано"/>
             <ComboBoxItem Content="Снято с публикации"/>
         </ComboBox>
 
@@ -167,7 +169,7 @@
                     Grid.Row="17" 
                     Grid.Column="1">
             <ListView x:Name="ImagesListView" 
-                          Height="100" 
+                          Height="200" 
                           ItemsSource="{Binding ImageList}">
                 <ListView.ItemTemplate>
                     <DataTemplate>

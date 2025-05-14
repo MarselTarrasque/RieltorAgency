@@ -8,6 +8,6 @@ namespace Rieltors.ADO
 {
     internal class ConnectionDb
     {
-        public static RieltorAgencyEntities3 db = new RieltorAgencyEntities3();
+        public static RieltorAgencyEntities5 db = new RieltorAgencyEntities5();
     }
 }

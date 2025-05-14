@@ -178,5 +178,10 @@ namespace Rieltors.Pages
                 _mw.MainFrame.NavigationService.Navigate(new PropertiesPage(_mw, _userId));
             }
         }
+
+        private void CreateRequestButton_Click(object sender, RoutedEventArgs e)
+        {
+            _mw.MainFrame.NavigationService.Navigate(new ClientPages.RequestPropertyDetails(_mw, _userId, _propertyId));
+        }
     }
 }

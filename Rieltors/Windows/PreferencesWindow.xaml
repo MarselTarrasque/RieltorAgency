@@ -5,16 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Rieltors.Windows"
         mc:Ignorable="d"
-        Title="PreferencesWindow" Height="550" Width="800"
+        Title="PreferencesWindow" Height="574" Width="800"
         ResizeMode="NoResize">
-    <Grid>
-        <StackPanel Margin="10">
+    <Grid Margin="0,0,0,-16">
+        <StackPanel Margin="10,10,10,0">
             <!-- PropertyType -->
             <Label Content="Тип Недвижимости:" />
             <ComboBox x:Name="PropertyTypeComboBox" Margin="0,0,0,10" >
-                <ComboBoxItem Content="Квартира" />
-                <ComboBoxItem Content="Дом" />
-                <ComboBoxItem Content="Студия" />
+                <ComboBoxItem Content="Квартира"/>
+                <ComboBoxItem Content="Дом"/>
+                <ComboBoxItem Content="Студия"/>
+                <ComboBoxItem Content="Комната"/>
+                <ComboBoxItem Content="Офис" />
+                <ComboBoxItem Content="Участок" />
             </ComboBox>
 
             <!-- MinPrice -->
@@ -41,9 +44,15 @@
 
 
             <!-- Save Button -->
+            <Label Content="Статус недвижимости:" />
+            <ComboBox x:Name="PropertyStatusComboBox" >
+                <ComboBoxItem Content="Доступно" />
+                <ComboBoxItem Content="Продано" />
+                <ComboBoxItem Content="Арендовано" />
+            </ComboBox>
             <Button Content="Сохранить" Click="SaveButton_Click"  Style="{StaticResource ActionButtonStyle}" Width="188"/>
-            
+
         </StackPanel>
-        
+
     </Grid>
 </Window>

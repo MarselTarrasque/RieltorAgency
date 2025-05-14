@@ -1,25 +1,28 @@
 ﻿<Page x:Class="Rieltors.Pages.EditProfilePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Rieltors.Pages"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       d:DesignHeight="800" d:DesignWidth="1000"
       Title="EditProfilePage"
-        Background="{StaticResource BackgroundColor}">
+      Style="{StaticResource PageStyle}"
+      Loaded="EditProfilePage_Loaded">
+    <!-- Добавлен обработчик события Loaded -->
 
-    <Grid>
+    <Grid Style="{StaticResource PageContainerStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MinHeight="40"/>
+            <RowDefinition Height="Auto" MinHeight="40"/>
+            <RowDefinition Height="Auto" MinHeight="40"/>
+            <RowDefinition Height="Auto" MinHeight="40"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
@@ -27,73 +30,50 @@
 
         <TextBlock Grid.Row="0" Grid.ColumnSpan="2"
                    Text="Редактирование профиля"
-                   FontSize="24"
-                   FontWeight="Bold"
-                   HorizontalAlignment="Center"
-                   Margin="0,20,0,20"
-                   Foreground="{StaticResource PrimaryColor}"/>
+                   Style="{StaticResource PageHeaderStyle}"/>
 
         <TextBlock Grid.Row="1" Grid.Column="0"
                    Text="Имя:"
-                   FontSize="16"
-                   Margin="20,10,10,5"
-                   Foreground="{StaticResource TextColor}"/>
+                   Style="{StaticResource LabelStyle}"/>
         <TextBox Grid.Row="1" Grid.Column="1"
-                 x:Name="FirstNameTextBox"
+                 x:Name="FirstNameTextBox" Height="30"
                  Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"
-                 FontSize="16"
-                 Margin="10,10,20,5"/>
+                 Margin="3"/>
 
         <TextBlock Grid.Row="2" Grid.Column="0"
                    Text="Фамилия:"
-                   FontSize="16"
-                   Margin="20,5,10,5"
-                   Foreground="{StaticResource TextColor}"/>
+                   Style="{StaticResource LabelStyle}"/>
         <TextBox Grid.Row="2" Grid.Column="1"
-                 x:Name="LastNameTextBox"
+                 x:Name="LastNameTextBox" Height="30"
                  Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"
-                 FontSize="16"
-                 Margin="10,5,20,5"/>
+                 Margin="3"/>
 
         <TextBlock Grid.Row="3" Grid.Column="0"
                    Text="Email:"
-                   FontSize="16"
-                   Margin="20,5,10,5"                   Foreground="{StaticResource TextColor}"/>
+                   Style="{StaticResource LabelStyle}"/>
         <TextBox Grid.Row="3" Grid.Column="1"
-                 x:Name="EmailTextBox"
+                 x:Name="EmailTextBox" Height="30"
                  Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
-                 FontSize="16"
-                 Margin="10,5,20,5"/>
+                 Margin="3"/>
 
         <TextBlock Grid.Row="4" Grid.Column="0"
                    Text="Номер телефона:"
-                   FontSize="16"
-                   Margin="20,5,10,5"
-                   Foreground="{StaticResource TextColor}"/>
+                   Style="{StaticResource LabelStyle}"/>
         <TextBox Grid.Row="4" Grid.Column="1"
-                 x:Name="PhoneNumberTextBox"
+                 x:Name="PhoneNumberTextBox" Height="30"
                  Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}"
-                 FontSize="16"
-                 Margin="10,5,20,5"/>
+                 Margin="3"/>
 
         <StackPanel Grid.Row="5" Grid.ColumnSpan="2"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center"
-                    Margin="0,20,0,0">
+                    Style="{StaticResource ButtonPanelStyle}">
             <Button x:Name="SaveButton"
                     Content="Сохранить"
-                    FontSize="16"
-                    Padding="15,5"
-                    Margin="0,0,10,0"
-                    Background="{StaticResource PrimaryColor}"
-                    Foreground="White"
-                    Click="SaveButton_Click"/>
+                    Click="SaveButton_Click"
+                    Style="{StaticResource ActionButtonStyle}"/>
             <Button x:Name="CancelButton"
                     Content="Отмена"
-                    FontSize="16"
-                    Padding="15,5"
-                    Background="LightGray"
-                    Click="CancelButton_Click"/>
+                    Click="CancelButton_Click"
+                    Style="{StaticResource CancelButtonStyle}"/>
         </StackPanel>
 
         <TextBlock x:Name="ErrorMessage" Grid.Row="6" Grid.ColumnSpan="2"

@@ -97,20 +97,35 @@
     <Compile Include="ADO\PropertyImages.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="ADO\RequestProperties.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ADO\Requests.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="ADO\sysdiagrams.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="ADO\Users.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ClientPages\RequestDetails.xaml.cs">
+      <DependentUpon>RequestDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ClientPages\RequestPropertyDetails.xaml.cs">
+      <DependentUpon>RequestPropertyDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreateRequestPage.xaml.cs">
+      <DependentUpon>CreateRequestPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\EditProfilePage.xaml.cs">
       <DependentUpon>EditProfilePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ClientPages\Requests.xaml.cs">
+      <DependentUpon>Requests.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\RieltorPages\AllClients.xaml.cs">
       <DependentUpon>AllClients.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\RieltorPages\RIeltorDealsPage.xaml.cs">
-      <DependentUpon>RIeltorDealsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\RieltorPages\RieltorEditPropertyPage.xaml.cs">
       <DependentUpon>RieltorEditPropertyPage.xaml</DependentUpon>
@@ -139,7 +154,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\ClientPages\RequestDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ClientPages\RequestPropertyDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ClientPages\UserDeals.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CreateRequestPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -159,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pages\ClientPages\Requests.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\RieltorPages\AllClients.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -168,10 +199,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\PropertiesPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\RieltorPages\RIeltorDealsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -247,6 +274,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Classes\" />
+    <Folder Include="Images\PropertiesImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ADO\Model1.Context.tt">
@@ -259,10 +287,6 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-    <Resource Include="Images\PropertiesImages\52d53dbf-155f-4a13-b519-86ed85eaa721.jpg" />
-    <Resource Include="Images\PropertiesImages\724c4b22-51c4-416d-913d-725aadf4e0fb.JPG" />
-    <Resource Include="Images\PropertiesImages\a7aa3cb9-4863-4982-b2ae-58edbd579d81.JPG" />
-    <Resource Include="Images\PropertiesImages\6c1ccc6c-97b8-455c-bcb3-71a64ba52a0b.JPG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

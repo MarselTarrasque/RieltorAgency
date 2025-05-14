@@ -13,10 +13,10 @@ namespace Rieltors.ADO
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class RieltorAgencyEntities3 : DbContext
+    public partial class RieltorAgencyEntities5 : DbContext
     {
-        public RieltorAgencyEntities3()
-            : base("name=RieltorAgencyEntities3")
+        public RieltorAgencyEntities5()
+            : base("name=RieltorAgencyEntities5")
         {
         }
     
@@ -31,6 +31,8 @@ namespace Rieltors.ADO
         public virtual DbSet<DocumentTemplates> DocumentTemplates { get; set; }
         public virtual DbSet<Properties> Properties { get; set; }
         public virtual DbSet<PropertyImages> PropertyImages { get; set; }
+        public virtual DbSet<RequestProperties> RequestProperties { get; set; }
+        public virtual DbSet<Requests> Requests { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Users> Users { get; set; }
     }

@@ -4,15 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="43e2c984ae23420aa62dc13a5f7fff17" Name="Diagram1">
-        <EntityTypeShape EntityType="RieltorAgencyModel.ClientPreferences" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="RieltorAgencyModel.DealDocuments" Width="1.5" PointX="7.5" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="RieltorAgencyModel.Deals" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="RieltorAgencyModel.DocumentTemplates" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="RieltorAgencyModel.Properties" Width="1.5" PointX="3" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="RieltorAgencyModel.PropertyImages" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
+      <Diagram DiagramId="11edf9411c0048898da9bc600d937e48" Name="Diagram1">
+        <EntityTypeShape EntityType="RieltorAgencyModel.ClientPreferences" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RieltorAgencyModel.DealDocuments" Width="1.5" PointX="7.5" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RieltorAgencyModel.Deals" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RieltorAgencyModel.DocumentTemplates" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RieltorAgencyModel.Properties" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RieltorAgencyModel.PropertyImages" Width="1.5" PointX="5.25" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RieltorAgencyModel.RequestProperties" Width="1.5" PointX="5.25" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="RieltorAgencyModel.Requests" Width="1.5" PointX="3" PointY="17.375" IsExpanded="true" />
         <EntityTypeShape EntityType="RieltorAgencyModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RieltorAgencyModel.Users" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RieltorAgencyModel.Users" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
         <AssociationConnector Association="RieltorAgencyModel.FK__ClientPre__Clien__778AC167" ManuallyRouted="false" />
         <AssociationConnector Association="RieltorAgencyModel.FK__DealDocum__DealI__7E37BEF6" ManuallyRouted="false" />
         <AssociationConnector Association="RieltorAgencyModel.FK__DealDocum__Templ__7F2BE32F" ManuallyRouted="false" />
@@ -21,6 +23,10 @@
         <AssociationConnector Association="RieltorAgencyModel.FK__Deals__RealtorID__74AE54BC" ManuallyRouted="false" />
         <AssociationConnector Association="RieltorAgencyModel.FK__Propertie__Realt__6A30C649" ManuallyRouted="false" />
         <AssociationConnector Association="RieltorAgencyModel.FK__PropertyI__Prope__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="RieltorAgencyModel.FK__RequestPr__Prope__42E1EEFE" ManuallyRouted="false" />
+        <AssociationConnector Association="RieltorAgencyModel.FK__RequestPr__Reque__41EDCAC5" ManuallyRouted="false" />
+        <AssociationConnector Association="RieltorAgencyModel.FK__Requests__Client__3E1D39E1" ManuallyRouted="false" />
+        <AssociationConnector Association="RieltorAgencyModel.FK__Requests__Realto__3F115E1A" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

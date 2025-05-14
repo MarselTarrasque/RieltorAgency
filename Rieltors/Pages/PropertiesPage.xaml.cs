@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using Rieltors.ADO;
+﻿using Rieltors.ADO;
 using Rieltors.Windows;
 using System;
 using System.Collections.Generic;
@@ -40,7 +39,49 @@ namespace Rieltors.Pages
         {
             try
             {
-                var properties = ConnectionDb.db.Properties.ToList();
+                var clientPreferences = ConnectionDb.db.ClientPreferences.FirstOrDefault(p => p.ClientID == _userId);
+                IQueryable<ADO.Properties> propertiesQuery = ConnectionDb.db.Properties;
+
+                if (clientPreferences != null)
+                {
+                    // Применяем фильтры на основе предпочтений
+                    if (!string.IsNullOrEmpty(clientPreferences.PropertyType))
+                    {
+                        propertiesQuery = propertiesQuery.Where(p => p.PropertyType == clientPreferences.PropertyType);
+                    }
+                    if (!string.IsNullOrEmpty(clientPreferences.Status))
+                    {
+                        propertiesQuery = propertiesQuery.Where(p => p.PropertyStatus == clientPreferences.Status);
+                    }
+                    if (clientPreferences.MinPrice.HasValue)
+                    {
+                        propertiesQuery = propertiesQuery.Where(p => p.Price >= clientPreferences.MinPrice.Value);
+                    }
+
+                    if (clientPreferences.MaxPrice.HasValue)
+                    {
+                        propertiesQuery = propertiesQuery.Where(p => p.Price <= clientPreferences.MaxPrice.Value);
+                    }
+
+                    if (clientPreferences.MinArea.HasValue)
+                    {
+                        propertiesQuery = propertiesQuery.Where(p => p.Area >= clientPreferences.MinArea.Value);
+                    }
+
+                    if (clientPreferences.MaxArea.HasValue)
+                    {
+                        propertiesQuery = propertiesQuery.Where(p => p.Area <= clientPreferences.MaxArea.Value);
+                    }
+
+                    if (!string.IsNullOrEmpty(clientPreferences.Location))
+                    {
+                        // Тут можно сделать более сложную логику поиска по местоположению
+                        // Например, искать вхождение подстроки в Address или City
+                        propertiesQuery = propertiesQuery.Where(p => p.Address.Contains(clientPreferences.Location) || p.City.Contains(clientPreferences.Location));
+                    }
+                }
+
+                var properties = propertiesQuery.ToList();
 
                 var propertiesWithImages = properties.Select(p => new PropertiesWithFirstImage
                 {
@@ -95,6 +136,20 @@ namespace Rieltors.Pages
             preferencesWindow.ShowDialog();
             LoadProperties();
         }
+
+        private void ResetPreferences(object sender, RoutedEventArgs e)
+        {
+            var clientPreferences = ConnectionDb.db.ClientPreferences.FirstOrDefault(p => p.ClientID == _userId);
+            clientPreferences.PropertyType = null;
+            clientPreferences.Location = null;
+            clientPreferences.MaxPrice = null;
+            clientPreferences.MinPrice = null;
+            clientPreferences.MinArea = null;
+            clientPreferences.MaxArea = null;
+            clientPreferences.Status = null;
+            ConnectionDb.db.SaveChanges();
+            LoadProperties();
+        }
     }
 
     public class PropertiesWithFirstImage : ADO.Properties
@@ -103,13 +158,13 @@ namespace Rieltors.Pages
         private PropertyImages _firstImage;
         public PropertyImages FirstImage
         {
-            get
+            get 
             {
                 if (_firstImage != null && !string.IsNullOrEmpty(_firstImage.ImageURL))
                 {
                     string imagePath = System.IO.Path.Combine(_propertyImagesDirectory, _firstImage.ImageURL);
                     if (File.Exists(imagePath))
-                    {   
+                    {
                         return new PropertyImages { ImageURL = imagePath, Description = _firstImage.Description };
                     }
                     else

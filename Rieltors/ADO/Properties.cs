@@ -19,6 +19,7 @@ namespace Rieltors.ADO
         {
             this.Deals = new HashSet<Deals>();
             this.PropertyImages = new HashSet<PropertyImages>();
+            this.RequestProperties = new HashSet<RequestProperties>();
         }
     
         public int PropertyID { get; set; }
@@ -40,5 +41,7 @@ namespace Rieltors.ADO
         public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PropertyImages> PropertyImages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RequestProperties> RequestProperties { get; set; }
     }
 }

@@ -19,6 +19,18 @@
                 Content="Недвижимость"
                 Style="{StaticResource ActionButtonStyle}"
                 Click="PropertiesButton_Click" Width="189"/>
+        <Button x:Name="Requests"
+            Content="Создать обращение"
+            Style="{StaticResource ActionButtonStyle}"
+            Click="RequestsButton_Click" Width="189"/>
+        <Button x:Name="MyRequests"
+            Content="Мои обращения"
+            Style="{StaticResource ActionButtonStyle}"
+            Click="MyRequestsButton_Click" Width="189"/>
+        <Button x:Name="LogoutButton"
+            Content="Выйти"
+            Style="{StaticResource CancelButtonStyle}"
+            Click="LogoutButton_Click"/>
 
     </StackPanel>
 </Page>

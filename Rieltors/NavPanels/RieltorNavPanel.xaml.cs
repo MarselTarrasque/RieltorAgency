@@ -60,7 +60,7 @@ namespace Rieltors.NavPanels
 
         private void MyDeals_Click(object sender, RoutedEventArgs e)
         {
-            _mw.MainFrame.NavigationService.Navigate(new MyDeals(_mw, _userId));
+            //_mw.MainFrame.NavigationService.Navigate(new MyDeals(_mw, _userId));
         }
     }
 }

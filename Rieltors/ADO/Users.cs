@@ -21,6 +21,8 @@ namespace Rieltors.ADO
             this.Deals = new HashSet<Deals>();
             this.Deals1 = new HashSet<Deals>();
             this.Properties = new HashSet<Properties>();
+            this.Requests = new HashSet<Requests>();
+            this.Requests1 = new HashSet<Requests>();
         }
     
         public int UserID { get; set; }
@@ -41,5 +43,9 @@ namespace Rieltors.ADO
         public virtual ICollection<Deals> Deals1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Properties> Properties { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Requests> Requests { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Requests> Requests1 { get; set; }
     }
 }

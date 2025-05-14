@@ -17,6 +17,7 @@
           <Property Name="MinArea" Type="decimal" Precision="10" Scale="2" />
           <Property Name="MaxArea" Type="decimal" Precision="10" Scale="2" />
           <Property Name="Location" Type="nvarchar" MaxLength="255" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="DealDocuments">
           <Key>
@@ -79,6 +80,33 @@
           <Property Name="PropertyID" Type="int" Nullable="false" />
           <Property Name="ImageURL" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="RequestProperties">
+          <Key>
+            <PropertyRef Name="RequestPropertyID" />
+          </Key>
+          <Property Name="RequestPropertyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequestID" Type="int" Nullable="false" />
+          <Property Name="PropertyID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Requests">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="int" />
+          <Property Name="RealtorID" Type="int" />
+          <Property Name="RequestDate" Type="datetime" />
+          <Property Name="RequestType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PropertyType" Type="varchar" MaxLength="50" />
+          <Property Name="Location" Type="varchar" MaxLength="255" />
+          <Property Name="PriceMin" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PriceMax" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="AreaMin" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="AreaMax" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Description" Type="text" />
+          <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Notes" Type="text" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -204,6 +232,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__RequestPr__Prope__42E1EEFE">
+          <End Role="Properties" Type="Self.Properties" Multiplicity="1" />
+          <End Role="RequestProperties" Type="Self.RequestProperties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Properties">
+              <PropertyRef Name="PropertyID" />
+            </Principal>
+            <Dependent Role="RequestProperties">
+              <PropertyRef Name="PropertyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RequestPr__Reque__41EDCAC5">
+          <End Role="Requests" Type="Self.Requests" Multiplicity="1" />
+          <End Role="RequestProperties" Type="Self.RequestProperties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Requests">
+              <PropertyRef Name="RequestID" />
+            </Principal>
+            <Dependent Role="RequestProperties">
+              <PropertyRef Name="RequestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Requests__Client__3E1D39E1">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Requests__Realto__3F115E1A">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="RealtorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище RieltorAgencyModelContainer">
           <EntitySet Name="ClientPreferences" EntityType="Self.ClientPreferences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DealDocuments" EntityType="Self.DealDocuments" Schema="dbo" store:Type="Tables" />
@@ -211,6 +287,8 @@
           <EntitySet Name="DocumentTemplates" EntityType="Self.DocumentTemplates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Properties" EntityType="Self.Properties" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PropertyImages" EntityType="Self.PropertyImages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestProperties" EntityType="Self.RequestProperties" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__ClientPre__Clien__778AC167" Association="Self.FK__ClientPre__Clien__778AC167">
@@ -245,6 +323,22 @@
             <End Role="Properties" EntitySet="Properties" />
             <End Role="PropertyImages" EntitySet="PropertyImages" />
           </AssociationSet>
+          <AssociationSet Name="FK__RequestPr__Prope__42E1EEFE" Association="Self.FK__RequestPr__Prope__42E1EEFE">
+            <End Role="Properties" EntitySet="Properties" />
+            <End Role="RequestProperties" EntitySet="RequestProperties" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RequestPr__Reque__41EDCAC5" Association="Self.FK__RequestPr__Reque__41EDCAC5">
+            <End Role="Requests" EntitySet="Requests" />
+            <End Role="RequestProperties" EntitySet="RequestProperties" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Requests__Client__3E1D39E1" Association="Self.FK__Requests__Client__3E1D39E1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Requests__Realto__3F115E1A" Association="Self.FK__Requests__Realto__3F115E1A">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -263,6 +357,7 @@
           <Property Name="MinArea" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="MaxArea" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="Location" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Users" Relationship="Self.FK__ClientPre__Clien__778AC167" FromRole="ClientPreferences" ToRole="Users" />
         </EntityType>
         <EntityType Name="DealDocuments">
@@ -327,6 +422,7 @@
           <NavigationProperty Name="Deals" Relationship="Self.FK__Deals__PropertyI__72C60C4A" FromRole="Properties" ToRole="Deals" />
           <NavigationProperty Name="Users" Relationship="Self.FK__Propertie__Realt__6A30C649" FromRole="Properties" ToRole="Users" />
           <NavigationProperty Name="PropertyImages" Relationship="Self.FK__PropertyI__Prope__6D0D32F4" FromRole="Properties" ToRole="PropertyImages" />
+          <NavigationProperty Name="RequestProperties" Relationship="Self.FK__RequestPr__Prope__42E1EEFE" FromRole="Properties" ToRole="RequestProperties" />
         </EntityType>
         <EntityType Name="PropertyImages">
           <Key>
@@ -337,6 +433,38 @@
           <Property Name="ImageURL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Properties" Relationship="Self.FK__PropertyI__Prope__6D0D32F4" FromRole="PropertyImages" ToRole="Properties" />
+        </EntityType>
+        <EntityType Name="RequestProperties">
+          <Key>
+            <PropertyRef Name="RequestPropertyID" />
+          </Key>
+          <Property Name="RequestPropertyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestID" Type="Int32" Nullable="false" />
+          <Property Name="PropertyID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Properties" Relationship="Self.FK__RequestPr__Prope__42E1EEFE" FromRole="RequestProperties" ToRole="Properties" />
+          <NavigationProperty Name="Requests" Relationship="Self.FK__RequestPr__Reque__41EDCAC5" FromRole="RequestProperties" ToRole="Requests" />
+        </EntityType>
+        <EntityType Name="Requests">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="RealtorID" Type="Int32" />
+          <Property Name="RequestDate" Type="DateTime" Precision="3" />
+          <Property Name="RequestType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PropertyType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PriceMin" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PriceMax" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="AreaMin" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="AreaMax" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="RequestProperties" Relationship="Self.FK__RequestPr__Reque__41EDCAC5" FromRole="Requests" ToRole="RequestProperties" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Requests__Client__3E1D39E1" FromRole="Requests" ToRole="Users" />
+          <NavigationProperty Name="Users1" Relationship="Self.FK__Requests__Realto__3F115E1A" FromRole="Requests" ToRole="Users" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -365,6 +493,8 @@
           <NavigationProperty Name="Deals" Relationship="Self.FK__Deals__ClientID__73BA3083" FromRole="Users" ToRole="Deals" />
           <NavigationProperty Name="Deals1" Relationship="Self.FK__Deals__RealtorID__74AE54BC" FromRole="Users" ToRole="Deals" />
           <NavigationProperty Name="Properties" Relationship="Self.FK__Propertie__Realt__6A30C649" FromRole="Users" ToRole="Properties" />
+          <NavigationProperty Name="Requests" Relationship="Self.FK__Requests__Client__3E1D39E1" FromRole="Users" ToRole="Requests" />
+          <NavigationProperty Name="Requests1" Relationship="Self.FK__Requests__Realto__3F115E1A" FromRole="Users" ToRole="Requests" />
         </EntityType>
         <Association Name="FK__ClientPre__Clien__778AC167">
           <End Role="Users" Type="Self.Users" Multiplicity="1">
@@ -466,13 +596,63 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="RieltorAgencyEntities3" annotation:LazyLoadingEnabled="true">
+        <Association Name="FK__RequestPr__Prope__42E1EEFE">
+          <End Role="Properties" Type="Self.Properties" Multiplicity="1" />
+          <End Role="RequestProperties" Type="Self.RequestProperties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Properties">
+              <PropertyRef Name="PropertyID" />
+            </Principal>
+            <Dependent Role="RequestProperties">
+              <PropertyRef Name="PropertyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__RequestPr__Reque__41EDCAC5">
+          <End Role="Requests" Type="Self.Requests" Multiplicity="1" />
+          <End Role="RequestProperties" Type="Self.RequestProperties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Requests">
+              <PropertyRef Name="RequestID" />
+            </Principal>
+            <Dependent Role="RequestProperties">
+              <PropertyRef Name="RequestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Requests__Client__3E1D39E1">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Requests__Realto__3F115E1A">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="RealtorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="RieltorAgencyEntities5" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ClientPreferences" EntityType="Self.ClientPreferences" />
           <EntitySet Name="DealDocuments" EntityType="Self.DealDocuments" />
           <EntitySet Name="Deals" EntityType="Self.Deals" />
           <EntitySet Name="DocumentTemplates" EntityType="Self.DocumentTemplates" />
           <EntitySet Name="Properties" EntityType="Self.Properties" />
           <EntitySet Name="PropertyImages" EntityType="Self.PropertyImages" />
+          <EntitySet Name="RequestProperties" EntityType="Self.RequestProperties" />
+          <EntitySet Name="Requests" EntityType="Self.Requests" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Users" EntityType="Self.Users" />
           <AssociationSet Name="FK__ClientPre__Clien__778AC167" Association="Self.FK__ClientPre__Clien__778AC167">
@@ -507,13 +687,29 @@
             <End Role="Properties" EntitySet="Properties" />
             <End Role="PropertyImages" EntitySet="PropertyImages" />
           </AssociationSet>
+          <AssociationSet Name="FK__RequestPr__Prope__42E1EEFE" Association="Self.FK__RequestPr__Prope__42E1EEFE">
+            <End Role="Properties" EntitySet="Properties" />
+            <End Role="RequestProperties" EntitySet="RequestProperties" />
+          </AssociationSet>
+          <AssociationSet Name="FK__RequestPr__Reque__41EDCAC5" Association="Self.FK__RequestPr__Reque__41EDCAC5">
+            <End Role="Requests" EntitySet="Requests" />
+            <End Role="RequestProperties" EntitySet="RequestProperties" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Requests__Client__3E1D39E1" Association="Self.FK__Requests__Client__3E1D39E1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Requests__Realto__3F115E1A" Association="Self.FK__Requests__Realto__3F115E1A">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище RieltorAgencyModelContainer" CdmEntityContainer="RieltorAgencyEntities3">
+        <EntityContainerMapping StorageEntityContainer="Хранилище RieltorAgencyModelContainer" CdmEntityContainer="RieltorAgencyEntities5">
           <EntitySetMapping Name="ClientPreferences">
             <EntityTypeMapping TypeName="RieltorAgencyModel.ClientPreferences">
               <MappingFragment StoreEntitySet="ClientPreferences">
@@ -525,6 +721,7 @@
                 <ScalarProperty Name="MinArea" ColumnName="MinArea" />
                 <ScalarProperty Name="MaxArea" ColumnName="MaxArea" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -592,6 +789,35 @@
                 <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
                 <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestProperties">
+            <EntityTypeMapping TypeName="RieltorAgencyModel.RequestProperties">
+              <MappingFragment StoreEntitySet="RequestProperties">
+                <ScalarProperty Name="RequestPropertyID" ColumnName="RequestPropertyID" />
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+                <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requests">
+            <EntityTypeMapping TypeName="RieltorAgencyModel.Requests">
+              <MappingFragment StoreEntitySet="Requests">
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="RealtorID" ColumnName="RealtorID" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="RequestType" ColumnName="RequestType" />
+                <ScalarProperty Name="PropertyType" ColumnName="PropertyType" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="PriceMin" ColumnName="PriceMin" />
+                <ScalarProperty Name="PriceMax" ColumnName="PriceMax" />
+                <ScalarProperty Name="AreaMin" ColumnName="AreaMin" />
+                <ScalarProperty Name="AreaMax" ColumnName="AreaMax" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

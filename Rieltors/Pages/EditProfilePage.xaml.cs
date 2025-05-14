@@ -1,40 +1,36 @@
 ﻿using Rieltors.ADO;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Rieltors.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для EditProfilePage.xaml
-    /// </summary>
     public partial class EditProfilePage : Page
     {
         private int _userId;
-        private MainWindow _mw;
-        private Users _currentUser;  // Добавлено поле для хранения текущего пользователя
+        private Users _currentUser;
 
         public EditProfilePage(MainWindow mw, int userId)
         {
             InitializeComponent();
-            _mw = mw;
+
             _userId = userId;
-            _currentUser = ConnectionDb.db.Users.FirstOrDefault(u => u.UserID == userId); // Получаем пользователя и сохраняем в поле
+            _currentUser = ConnectionDb.db.Users.FirstOrDefault(u => u.UserID == _userId);
+            MessageBox.Show(_currentUser.Email);
+        }
+
+        private void EditProfilePage_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadUserData();
+        }
+
+        private void LoadUserData()
+        {
+            _currentUser = ConnectionDb.db.Users.FirstOrDefault(u => u.UserID == _userId);
 
             if (_currentUser != null)
             {
-                // Заполняем элементы управления данными пользователя
                 FirstNameTextBox.Text = _currentUser.FirstName;
                 LastNameTextBox.Text = _currentUser.LastName;
                 EmailTextBox.Text = _currentUser.Email;
@@ -43,14 +39,12 @@ namespace Rieltors.Pages
             else
             {
                 MessageBox.Show("Пользователь не найден.");
-                NavigationService?.GoBack();  // Возвращаемся на предыдущую страницу, если пользователь не найден.
+                NavigationService?.GoBack();
             }
         }
 
-
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Обновляем данные пользователя
             if (_currentUser != null)
             {
                 _currentUser.FirstName = FirstNameTextBox.Text;
@@ -62,7 +56,7 @@ namespace Rieltors.Pages
                 {
                     ConnectionDb.db.SaveChanges();
                     MessageBox.Show("Данные успешно сохранены.");
-                    NavigationService?.GoBack(); // Возвращаемся на предыдущую страницу после сохранения
+                    NavigationService?.GoBack();
                 }
                 catch (Exception ex)
                 {

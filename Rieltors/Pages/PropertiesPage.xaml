@@ -45,5 +45,17 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button Content="Настроить предпочтения"
+            Style="{StaticResource ActionButtonStyle}"
+            Margin="819,5,10,5"
+            Click="PreferencesButton_Click" HorizontalAlignment="Stretch"/>
+        <Button Content="Настроить предпочтения"
+            Style="{StaticResource ActionButtonStyle}"
+            Margin="819,5,10,5"
+            Click="PreferencesButton_Click" HorizontalAlignment="Stretch"/>
+        <Button Content="Сбросить предпочтения"
+            Style="{StaticResource ActionButtonStyle}"
+            Margin="643,5,186,5"
+            Click="ResetPreferences" HorizontalAlignment="Stretch"/>
     </Grid>
 </Page>

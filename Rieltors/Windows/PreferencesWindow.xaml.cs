@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rieltors.ADO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,10 +22,71 @@ namespace Rieltors.Windows
     {
         private int _userId;
 
+
         public PreferencesWindow(int userId)
         {
             InitializeComponent();
             _userId = userId;
+        
+            LoadPreferences(); // Загружаем предпочтения при инициализации окна
+        }
+
+        private void LoadPreferences()
+        {
+            try
+            {
+                var preferences = ConnectionDb.db.ClientPreferences.FirstOrDefault(p => p.ClientID == _userId);
+
+                if (preferences != null)
+                {
+                    // Заполняем элементы управления значениями из базы данных
+
+                    // PropertyType
+                    if (!string.IsNullOrEmpty(preferences.PropertyType))
+                    {
+                        // Находим ComboBoxItem с соответствующим Content
+                        foreach (ComboBoxItem item in PropertyTypeComboBox.Items)
+                        {
+                            if (item.Content.ToString() == preferences.PropertyType)
+                            {
+                                PropertyTypeComboBox.SelectedItem = item;
+                                break;
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(preferences.Status))
+                    {
+                        // Находим ComboBoxItem с соответствующим Content
+                        foreach (ComboBoxItem item in PropertyStatusComboBox.Items)
+                        {
+                            if (item.Content.ToString() == preferences.Status)
+                            {
+                                PropertyStatusComboBox.SelectedItem = item;
+                                break;
+                            }
+                        }
+                    }
+                    // MinPrice
+                    MinPriceTextBox.Text = preferences.MinPrice?.ToString();
+
+                    // MaxPrice
+                    MaxPriceTextBox.Text = preferences.MaxPrice?.ToString();
+
+                    // MinArea
+                    MinAreaTextBox.Text = preferences.MinArea?.ToString();
+
+                    // MaxArea
+                    MaxAreaTextBox.Text = preferences.MaxArea?.ToString();
+
+                    // Location
+                    LocationTextBox.Text = preferences.Location;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке предпочтений: {ex.Message}");
+            }
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -36,6 +98,7 @@ namespace Rieltors.Windows
             string minAreaText = MinAreaTextBox.Text;
             string maxAreaText = MaxAreaTextBox.Text;
             string location = LocationTextBox.Text;
+            string status = (PropertyStatusComboBox.SelectedItem as ComboBoxItem)?.Content?.ToString();
 
             // Проверка на пустые строки и некорректный ввод
             if (!ValidateInput(minPriceText, maxPriceText, minAreaText, maxAreaText))
@@ -48,12 +111,12 @@ namespace Rieltors.Windows
             decimal? maxPrice = string.IsNullOrEmpty(maxPriceText) ? (decimal?)null : decimal.Parse(maxPriceText);
             double? minArea = string.IsNullOrEmpty(minAreaText) ? (double?)null : double.Parse(minAreaText);
             double? maxArea = string.IsNullOrEmpty(maxAreaText) ? (double?)null : double.Parse(maxAreaText);
-          
 
 
             try
             {
-                var Preferences = ADO.ConnectionDb.db.ClientPreferences.FirstOrDefault(p => p.ClientID == _userId);
+                var Preferences = ConnectionDb.db.ClientPreferences.FirstOrDefault(p => p.ClientID == _userId);
+
                 if (Preferences != null)
                 {
                     // Обновление существующих предпочтений
@@ -63,8 +126,9 @@ namespace Rieltors.Windows
                     Preferences.MinArea = (decimal?)minArea;
                     Preferences.MaxArea = (decimal?)maxArea;
                     Preferences.Location = location;
+                    Preferences.Status = status;
 
-                    ADO.ConnectionDb.db.SaveChanges();
+                    ConnectionDb.db.SaveChanges();
 
                     MessageBox.Show("Предпочтения успешно обновлены.");
                     this.Close();
@@ -111,6 +175,10 @@ namespace Rieltors.Windows
 
             // Дополнительные проверки (например, min < max) можно добавить здесь
             return true;
+        }
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
         }
     }
 }

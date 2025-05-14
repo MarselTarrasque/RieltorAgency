@@ -166,15 +166,20 @@
                                 Click="ContactButton_Click"
                                 Style="{StaticResource ActionButtonStyle}" Width="115"/>
                         </StackPanel>
-                        <StackPanel x:Name="EditPanel" Grid.Row="3" Grid.Column="1" Margin="127,0,570,0">
+                        <StackPanel x:Name="EditPanel" Grid.Row="3" Grid.Column="1" Margin="277,0,420,0">
                             <Button Content="Редактировать"
                                 Click="EditButton_Click"
                                 Style="{StaticResource ActionButtonStyle}" Width="115"/>
                         </StackPanel>
-                        <StackPanel x:Name="DeletePanel" Grid.Row="3" Grid.Column="1" Margin="254,0,443,0">
+                        <StackPanel x:Name="DeletePanel" Grid.Row="3" Grid.Column="1" Margin="399,0,298,0">
                             <Button Content="Удалить"
                                 Click="Delete_Click"
                                 Style="{StaticResource ActionButtonStyle}" Width="115"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="3" Grid.Column="1" Margin="122,0,542,0">
+                            <Button Content="Оставить обращение "
+                                Click="CreateRequestButton_Click"
+                                Style="{StaticResource ActionButtonStyle}" Width="149"/>
                         </StackPanel>
                     </Grid>
                 </Border>

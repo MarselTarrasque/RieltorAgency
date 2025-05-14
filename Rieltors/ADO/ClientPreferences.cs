@@ -22,6 +22,7 @@ namespace Rieltors.ADO
         public Nullable<decimal> MinArea { get; set; }
         public Nullable<decimal> MaxArea { get; set; }
         public string Location { get; set; }
+        public string Status { get; set; }
     
         public virtual Users Users { get; set; }
     }

@@ -1,4 +1,5 @@
 ﻿using Rieltors.Pages;
+using Rieltors.Pages.ClientPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,5 +43,21 @@ namespace Rieltors.NavPanels
             _mw.MainFrame.NavigationService.Navigate(new Pages.PropertiesPage(_mw, _userId));
         }
 
+        private void MyRequestsButton_Click(object sender, RoutedEventArgs e)
+        {
+            _mw.MainFrame.NavigationService.Navigate(new Pages.ClientPages.Requests(_mw, _userId));
+        }
+
+        private void RequestsButton_Click(object sender, RoutedEventArgs e)
+        {
+            _mw.MainFrame.NavigationService.Navigate(new RequestDetails(_mw, _userId));
+        }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            _mw.MainFrame.NavigationService.Navigate(null);
+            _mw.NavPanel.NavigationService.Navigate(null);
+            _mw.RegisterFrame.NavigationService.Navigate(new RegistrationPage(_mw));
+        }
     }
 }
